@@ -57,7 +57,6 @@
     <Content Include="public\images\Avatars\piracy_256.png" />
     <Content Include="public\images\Avatars\spyware_256.png" />
     <Content Include="public\images\Avatars\technical_256.png" />
-    <Content Include="public\images\Avatars\Thumbs.db" />
     <Content Include="public\images\Avatars\user_256.png" />
     <Content Include="public\images\BackButton.png" />
     <Content Include="public\images\Button1Player.png" />
