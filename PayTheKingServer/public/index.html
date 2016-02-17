@@ -79,9 +79,9 @@
             var rating = document.querySelector("#rating");
             rating.innerHTML = settings.settings.rating;
         }
-        window.addEventListener("load", function () {
-            populate();
-        });
+         (function () {
+             populate();
+         })();
     </script>
 </body>
 </html>
