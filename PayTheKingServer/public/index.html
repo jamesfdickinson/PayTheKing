@@ -59,6 +59,14 @@
         </div>
 
     </div>
+    <script src="js/fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
     <script src="js/Settings.js"></script>
     <script>
         var populate = function () {
@@ -83,7 +91,7 @@
         //other load times http://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the
         window.addEventListener("DOMContentLoaded", function () {
             populate();
-            
+
         });
     </script>
 </body>

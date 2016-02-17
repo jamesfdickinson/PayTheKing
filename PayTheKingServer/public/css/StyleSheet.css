@@ -12,7 +12,11 @@
     xbackground: linear-gradient(#B9DFF6, #4A93EF);
     font-family: Arial, Helvetica, sans-serif;
 }
-
+/*removes the 300ms delay*/
+a[href], button {
+    -ms-touch-action: manipulation; /* IE10 */
+    touch-action: manipulation;     /* IE11 */
+}
 #wrapper {
     max-width: 700px;
     margin: 0 auto;
@@ -124,7 +128,7 @@
         padding: 3px 0px 1px 0;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+        text-overflow: clip;
     }
 
     .player.isBooted {

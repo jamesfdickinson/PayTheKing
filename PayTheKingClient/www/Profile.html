@@ -56,7 +56,7 @@
             </form>
             <div>
                 <label></label>
-                <button id="btnSave" class="button-block" >Save</button>
+                <button id="btnSave" class="button-block">Save</button>
             </div>
             <div>
                 <label></label>
@@ -72,6 +72,14 @@
 
 
     </div>
+    <script src="js/fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
     <script src="js/Settings.js"></script>
     <script>
         var populate = function () {
@@ -95,7 +103,7 @@
             var btnSave = document.getElementById("btnSave")
             btnSave.addEventListener("click", function () { save(); });
 
-            
+
 
             //var btnBack = document.getElementById("btnBack")
             //btnBack.addEventListener("click", function () { save(); });

@@ -23,6 +23,7 @@
     <Compile Include="PayTheKingGame.js" />
     <Compile Include="PayTheKingPlayerComputer.js" />
     <Compile Include="PayTheKingPlayer.js" />
+    <Compile Include="public\js\fastclick.js" />
     <Compile Include="public\js\PayTheKingGame.js" />
     <Compile Include="public\js\PayTheKingGameClient.js" />
     <Compile Include="public\js\PayTheKingGameUI.js" />
