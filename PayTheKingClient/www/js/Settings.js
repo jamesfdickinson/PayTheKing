@@ -85,7 +85,7 @@ function Settings() {
             this.settings = SettingsData;
             return;
         }
-        else  {
+        else {
             var data = localStorage.getItem('settings');
             if (data !== null) {
                 this.settings = JSON.parse(data);
@@ -127,7 +127,11 @@ function Settings() {
             }
             this.settings["device"] = os;
         }
-        if (this.settings["deviceId"] === undefined) this.settings["deviceId"] = this.settings["device"] + Math.floor((Math.random() * 100000000000000) + 1);
+        if (this.settings["deviceId"] === undefined) {
+            this.settings["deviceId"] = this.settings["device"] + Math.floor((Math.random() * 100000000000000) + 1);
+            //need to save settings atleast once so the user does not keep geting random settings once defaults are set
+            this.save();
+        }
 
         //get level
 

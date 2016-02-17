@@ -56,7 +56,7 @@
             </form>
             <div>
                 <label></label>
-                <button id="btnSave" class="button-block" >Delete All</button>
+                <button id="btnSave" class="button-block" >Save</button>
             </div>
             <div>
                 <label></label>
@@ -175,10 +175,13 @@
                 }
             }
         }
-        window.addEventListener("beforeunload", function () {
+        window.addEventListener("unload", function () {
             save();
         });
-
+        window.addEventListener("pagehide", function () {
+            save();
+        });
+        pageshow
         window.addEventListener("DOMContentLoaded", function () {
             populate();
         });
