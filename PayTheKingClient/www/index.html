@@ -20,17 +20,17 @@
             <a id="btnNewGame" href="gameOnline.html" class="button-block">Online</a>
   <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
             <div id="player1GamerTag" class="gamerTag">
-                <a href="Profile.html">
-                    <img class="gamerTagImage" id="player1Img" src="https://graph.facebook.com/560706963/picture?type=normal" />
+                <a href="profile.html">
+                    <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
                     <div style="float:right;"><img style="width:35px;height:35px;" src="images/Buttons/white-without-circle/settings.png" /></div>
-                    <div id="player1Name" class='title'>Jimmy the Great</div>
+                    <div id="playerName" class='title'>Jimmy the Great</div>
                     <div class='description'>
                         <img class="miniIcon" src="images/Buttons/other/Star.png" />
-                        Level 3
+                        Level <span id="level">5</span>
                     </div>
                     <div class='description'>
                         <img class="miniIcon" src="images/Buttons/other/Sports_medal_64.png" />
-                        Platinum (1321)
+                        <span id="rank">Silver</span> <span id="rating">(1200)</span>
                     </div>
                     <!--<div class="description">
                         <img class="miniIcon" src="images/Buttons/other/Throphy.png" />
@@ -59,7 +59,25 @@
         </div>
 
     </div>
+    <script src="js/Settings.js"></script>
+    <script>
+        var settings = new Settings();
 
+        var playerName = document.querySelector("#playerName");
+        playerName.innerHTML = settings.settings.name;
 
+        var playerImg = document.querySelector("#playerImg");
+        playerImg.src = settings.settings.avatar;
+
+        var level = document.querySelector("#level");
+        level.innerHTML = settings.settings.level;
+
+        var rank = document.querySelector("#rank");
+        rank.innerHTML = settings.settings.rank;
+
+        var rating = document.querySelector("#rating");
+        rating.innerHTML = settings.settings.rating;
+
+    </script>
 </body>
 </html>

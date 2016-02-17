@@ -31,9 +31,23 @@
         this.game = new PayTheKingGameClient();
         this.game.onEvent = this.onEvent;
 
+        
+
         //setup players
         this.localPlayer = new PayTheKingPlayerLocal("Jimmy");
         this.localPlayer.avatar = 'https://graph.facebook.com/560706963/picture?type=normal';
+
+        //get user settings
+        if (typeof Settings != 'undefined') {
+            var settings = new Settings();
+            this.localPlayer.id = settings.settings.id;
+            this.localPlayer.name = settings.settings.name;
+            this.localPlayer.avatar = settings.settings.avatar;
+            this.localPlayer.rank = settings.settings.rank;
+            this.localPlayer.rating = settings.settings.rating;
+            this.localPlayer.level = settings.settings.level;
+        }
+
         //todo: get the rest of users stats
         this.game.join(this.localPlayer);
 
