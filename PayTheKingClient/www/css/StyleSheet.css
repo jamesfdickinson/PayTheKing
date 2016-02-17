@@ -121,7 +121,10 @@
     }
 
     .player .playerName {
-         padding: 3px 0px 1px 0 ;
+        padding: 3px 0px 1px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .player.isBooted {
@@ -189,18 +192,21 @@ progress {
     width: 100px;
     float: left;
 }
-  
+
 #message {
     margin: 0 0 10px 120px;
     padding: 10px 10px 10px 15px;
 }
- #messageTitle{
-      font-size: 1.17em;
-      margin:3px 0px 5px 0px;
-  } 
- #messageDetails{
-     margin:3px 0px 3px 0px;
- }
+
+#messageTitle {
+    font-size: 1.17em;
+    margin: 3px 0px 5px 0px;
+}
+
+#messageDetails {
+    margin: 3px 0px 3px 0px;
+}
+
 .king {
     display: inline-block;
     height: 100px;
@@ -464,7 +470,7 @@ div.king:active {
 }
 
 .button-block {
-     text-decoration: none;
+    text-decoration: none;
     color: #ffffff;
     font-size: 20px;
     padding: 10px 10px 10px 10px;
