@@ -163,6 +163,7 @@
                         var settings = new Settings();
                         settings.reset();
                         settings.save();
+                        populate();
                         window.location = "index.html";
                     }
                 }, "Delete", ['Yes', 'No']);
@@ -171,11 +172,15 @@
                     var settings = new Settings();
                     settings.reset();
                     settings.save();
+                    populate();
                     window.location = "index.html";
                 }
             }
         }
-        window.addEventListener("unload", function () {
+        //window.addEventListener("unload", function () {
+        //    save();
+        //});
+        window.addEventListener("beforeunload", function () {
             save();
         });
         window.addEventListener("pagehide", function () {

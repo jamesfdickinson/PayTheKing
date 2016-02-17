@@ -10,9 +10,10 @@
     document.getElementById("btnPay10Gold").addEventListener("click", function () { _this.pay(10); });
     // document.getElementById("btnNewGame").addEventListener("click", function () { location.href = 'index.html'; });
     document.getElementById("btnNewGame1").addEventListener("click", function () { location.href = 'index.html'; });
-    document.getElementById("btnNewGame3").addEventListener("click", function () { location.href = 'index.html'; });
+    document.getElementById("btnPlayAgain").addEventListener("click", function () { location.reload();  });
     //document.getElementById("btnStart").addEventListener("click", function () { _this.game.start(); });
-
+    document.getElementById("btnBack").addEventListener("click", function () { location.href = 'index.html'; });
+     
     this.computerCount = 6;
     this.joinTimer;
 
