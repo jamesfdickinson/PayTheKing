@@ -178,7 +178,7 @@
     <Content Include="public\images\Thumbs.db" />
     <Content Include="public\images\wood.jpg" />
     <Content Include="public\index.html" />
-    <Content Include="public\Profile.html" />
+    <Content Include="public\profile.html" />
     <Content Include="public\test.html" />
   </ItemGroup>
   <ItemGroup>

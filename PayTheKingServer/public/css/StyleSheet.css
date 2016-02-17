@@ -17,6 +17,10 @@ a[href], button {
     -ms-touch-action: manipulation; /* IE10 */
     touch-action: manipulation;     /* IE11 */
 }
+/*fix view port in wp8*/
+@-ms-viewport{
+	width: device-width;
+}
 #wrapper {
     max-width: 700px;
     margin: 0 auto;
