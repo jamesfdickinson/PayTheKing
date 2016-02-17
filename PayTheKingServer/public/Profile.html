@@ -10,9 +10,8 @@
 </head>
 <body>
     <div id="wrapper">
-        <h1> <a class="backButton" href="index.html"></a>Settings</h1>
-
         <div id="settings">
+            <h1> <a class="backButton" href="index.html"></a>Settings</h1>
             <form name="form" novalidate saveBeforeExit>
                 <div><img id="imgAvatar" ng-src="{{settings.avatar}}" src="images/Avatars/default-avatar.png" style="height:100px; " /></div>
                 <div>
@@ -29,12 +28,8 @@
                         <option value="images/Avatars/spyware_256.png">spyware</option>
                         <option value="images/Avatars/technical_256.png">technical</option>
                         <option value="images/Avatars/user_256.png">user</option>
-                        <!--<option id="optFacebook" value="images/Avatars/default-avatar.png">facebook</option>-->
-                        <option value="https://graph.facebook.com/{{settings.facebookid}}/picture?type=normal">facebook</option>
-                        <!--<option id="optGravatar" value="http://www.gravatar.com/avatar/2052d2b1202425e2136a6ab6b7c9a107.jpg?s=100&r=pg&d=wavatar">gravatar</option>-->
-                        <!--<option id="optGravatar"  value="{{settingsManager.get_gravatar(settings.email) }}">gravatar</option>-->
-                        <option id="optGravatar" value="{{gravata
-                        <option id="optGravatar" value="{{gravatarUrl}}">gravatar</option>
+                        <!--<option value="https://graph.facebook.com/{{settings.facebookid}}/picture?type=normal">facebook</option>
+                        <option id="optGravatar" value="{{gravatarUrl}}">gravatar</option>-->
                     </select>
 
                 </div>
@@ -56,19 +51,122 @@
                         Log out
                     </div>
                 </div>
-                <div>
-                    <label>Id {{settings.id}}</label>
-                </div>
-              
+
+
             </form>
             <div>
                 <label></label>
-                <button id="btnDeleteData" ng-click="deleteData();">Delete All</button>
+                <button id="btnDeleteData" class="button-block" style="margin:20px 0 5px 0;" ng-click="deleteData();">Delete All</button>
+            </div>
+            <div>
+                <label></label>
+                <div>
+                    ID <span id="userId">123456</span>
+                </div>
             </div>
         </div>
 
- 
-    </div>
 
+    </div>
+    <script src="js/Settings.js"></script>
+    <script>
+        var settings = new Settings();
+
+        var txtName = document.querySelector("#txtName");
+        txtName.value = settings.settings.name;
+
+        var email = document.querySelector("#email");
+        email.value = settings.settings.email;
+        
+        var imgAvatar = document.querySelector("#imgAvatar");
+        imgAvatar.src = settings.settings.avatar;
+
+        var userId = document.querySelector("#userId");
+        userId.innerHTML = settings.settings.id;
+
+        var btnDeleteData = document.getElementById("btnDeleteData")
+        btnDeleteData.addEventListener("click", function () { deleteData(); });
+
+        //var btnBack = document.getElementById("btnBack")
+        //btnBack.addEventListener("click", function () { save(); });
+
+        //avatar drop down
+        var selAvatar = document.querySelector("#selAvatar");
+        selAvatar.addEventListener("change", function (e) {
+            var imgAvatar = document.querySelector("#imgAvatar");
+            imgAvatar.src = selAvatar.value;
+        });
+        //add facebook image
+        var option = new Option('facebook', settings.getFaceBookImage());
+        selAvatar.options.add(option);
+
+        //add gravatar image
+        var option = new Option('gravatar', settings.get_gravatar(settings.settings.email, 100));
+        selAvatar.options.add(option);
+        
+        var option = document.querySelector('option[value="' + settings.settings.avatar + '"]');
+        if (option) option.selected = true;
+
+
+        //facebook button
+        var btnFacebookLogIn = document.getElementById("btnFacebookLogIn");
+        btnFacebookLogIn.addEventListener("click", function () { fbLogIn(); });
+
+        var btnFacebookLogOut = document.getElementById("btnFacebookLogOut");
+        btnFacebookLogOut.addEventListener("click", function () { fbLogOut(); });
+
+        if (settings.settings.facebooktoken)
+            btnFacebookLogIn.style.display = 'none';
+
+        if (!settings.settings.facebooktoken)
+            btnFacebookLogOut.style.display = 'none';
+
+        window.onbeforeunload = function (e) {
+            save();
+        }
+
+        var save = function () {
+            var settings = new Settings();
+
+            var txtName = document.querySelector("#txtName");
+            settings.settings.name = txtName.value;
+            var email = document.querySelector("#email");
+            settings.settings.email = email.value;
+            var selAvatar = document.querySelector("#selAvatar");
+            settings.settings.avatar = selAvatar.value;
+
+            settings.save();
+        }
+        var fbLogIn = function () {
+            window.location = "login.html";
+        }
+        var fbLogOut = function () {
+            var settings = new Settings();
+            settings.settings.avatar = 'images/Avatars/default-avatar.png';
+            settings.settings.facebooktoken = null;
+            settings.save();
+            window.location = "index.html";
+        }
+        var deleteData = function () {
+            if (typeof navigator.notification != 'undefined') {
+                navigator.notification.confirm("This will delete all your data.  Are you sure?", function (i) {
+                    if (i == 1) {
+                        var settings = new Settings();
+                        settings.reset();
+                        settings.save();
+                        window.location = "index.html";
+                    }
+                }, "Delete", ['Yes', 'No']);
+            } else if (typeof confirm != 'undefined') {
+                if (confirm("This will delete all your data.  Are you sure?")) {
+                    var settings = new Settings();
+                    settings.reset();
+                    settings.save();
+                    window.location = "index.html";
+                }
+            }
+        }
+
+    </script>
 </body>
 </html>
