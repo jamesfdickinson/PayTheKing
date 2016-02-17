@@ -13,17 +13,17 @@
 
         <div id="menu">
             <h1>Pay the King</h1>
-            <div class="king wave" > </div>
-          
+            <div class="king wave"> </div>
+
 
             <a id="btnNewGame" href="game.html" class="button-block">New Game</a>
             <a id="btnNewGame" href="gameOnline.html" class="button-block">Online</a>
-  <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
+            <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
             <div id="player1GamerTag" class="gamerTag">
                 <a href="profile.html">
                     <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
                     <div style="float:right;"><img style="width:35px;height:35px;" src="images/Buttons/white-without-circle/settings.png" /></div>
-                    <div id="playerName" class='title'>Jimmy the Great</div>
+                    <div id="playerName" class='title'>Player1234</div>
                     <div class='description'>
                         <img class="miniIcon" src="images/Buttons/other/Star.png" />
                         Level <span id="level">5</span>
@@ -45,7 +45,7 @@
                 <a href="#/HowToPlay">
                     <img src="images/Buttons/white/questionmark.png" />
                 </a>
-     
+
                 <a href="https://www.facebook.com/847181962036765" target="_system">
                     <img src="images/Buttons/white/heart.png" />
                 </a>
@@ -54,7 +54,7 @@
                 <!--<a href="#/Stats"><img src="images/Buttons/white/stats.png" /></a>-->
                 <a href="#/LeaderBoard"><img src="images/Buttons/white/stats.png" /></a>
             </div>
-           
+
 
         </div>
 
@@ -79,7 +79,8 @@
             var rating = document.querySelector("#rating");
             rating.innerHTML = settings.settings.rating;
         }
-        window.addEventListener("load", function () {
+        //other load times http://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the
+        window.addEventListener("DOMContentLoaded", function () {
             populate();
         });
     </script>

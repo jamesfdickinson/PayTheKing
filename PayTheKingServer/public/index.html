@@ -23,7 +23,7 @@
                 <a href="profile.html">
                     <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
                     <div style="float:right;"><img style="width:35px;height:35px;" src="images/Buttons/white-without-circle/settings.png" /></div>
-                    <div id="playerName" class='title'>Jimmy the Great</div>
+                    <div id="playerName" class='title'>Player1234</div>
                     <div class='description'>
                         <img class="miniIcon" src="images/Buttons/other/Star.png" />
                         Level <span id="level">5</span>
@@ -79,9 +79,10 @@
             var rating = document.querySelector("#rating");
             rating.innerHTML = settings.settings.rating;
         }
-         (function () {
-             populate();
-         })();
+        //other load times http://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the
+        window.addEventListener("DOMContentLoaded", function () {
+            populate();
+        });
     </script>
 </body>
 </html>

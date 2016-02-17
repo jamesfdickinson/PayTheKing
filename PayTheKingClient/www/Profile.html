@@ -56,6 +56,10 @@
             </form>
             <div>
                 <label></label>
+                <button id="btnSave" class="button-block" >Delete All</button>
+            </div>
+            <div>
+                <label></label>
                 <button id="btnDeleteData" class="button-block" style="margin:20px 0 5px 0;" ng-click="deleteData();">Delete All</button>
             </div>
             <div>
@@ -87,6 +91,11 @@
 
             var btnDeleteData = document.getElementById("btnDeleteData")
             btnDeleteData.addEventListener("click", function () { deleteData(); });
+
+            var btnSave = document.getElementById("btnSave")
+            btnSave.addEventListener("click", function () { save(); });
+
+            
 
             //var btnBack = document.getElementById("btnBack")
             //btnBack.addEventListener("click", function () { save(); });
@@ -123,7 +132,7 @@
                 btnFacebookLogOut.style.display = 'none';
 
         };
-       
+
 
         var save = function () {
             var settings = new Settings();
@@ -169,7 +178,8 @@
         window.addEventListener("beforeunload", function () {
             save();
         });
-        window.addEventListener("load", function () {
+
+        window.addEventListener("DOMContentLoaded", function () {
             populate();
         });
 
