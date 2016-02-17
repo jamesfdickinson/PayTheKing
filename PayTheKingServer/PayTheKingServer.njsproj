@@ -29,6 +29,7 @@
     <Compile Include="public\js\PayTheKingGameUIOnline.js" />
     <Compile Include="public\js\PayTheKingPlayer.js" />
     <Compile Include="public\js\PayTheKingPlayerComputer.js" />
+    <Compile Include="public\js\Settings.js" />
     <Compile Include="public\js\socket.io-1.4.5.js" />
     <Content Include="package.json" />
     <Compile Include="app.js" />
