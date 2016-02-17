@@ -70,60 +70,60 @@
     </div>
     <script src="js/Settings.js"></script>
     <script>
-        var settings = new Settings();
+        var populate = function () {
+            var settings = new Settings();
 
-        var txtName = document.querySelector("#txtName");
-        txtName.value = settings.settings.name;
+            var txtName = document.querySelector("#txtName");
+            txtName.value = settings.settings.name;
 
-        var email = document.querySelector("#email");
-        email.value = settings.settings.email;
-        
-        var imgAvatar = document.querySelector("#imgAvatar");
-        imgAvatar.src = settings.settings.avatar;
+            var email = document.querySelector("#email");
+            email.value = settings.settings.email;
 
-        var userId = document.querySelector("#userId");
-        userId.innerHTML = settings.settings.id;
-
-        var btnDeleteData = document.getElementById("btnDeleteData")
-        btnDeleteData.addEventListener("click", function () { deleteData(); });
-
-        //var btnBack = document.getElementById("btnBack")
-        //btnBack.addEventListener("click", function () { save(); });
-
-        //avatar drop down
-        var selAvatar = document.querySelector("#selAvatar");
-        selAvatar.addEventListener("change", function (e) {
             var imgAvatar = document.querySelector("#imgAvatar");
-            imgAvatar.src = selAvatar.value;
-        });
-        //add facebook image
-        var option = new Option('facebook', settings.getFaceBookImage());
-        selAvatar.options.add(option);
+            imgAvatar.src = settings.settings.avatar;
 
-        //add gravatar image
-        var option = new Option('gravatar', settings.get_gravatar(settings.settings.email, 100));
-        selAvatar.options.add(option);
-        
-        var option = document.querySelector('option[value="' + settings.settings.avatar + '"]');
-        if (option) option.selected = true;
+            var userId = document.querySelector("#userId");
+            userId.innerHTML = settings.settings.id;
+
+            var btnDeleteData = document.getElementById("btnDeleteData")
+            btnDeleteData.addEventListener("click", function () { deleteData(); });
+
+            //var btnBack = document.getElementById("btnBack")
+            //btnBack.addEventListener("click", function () { save(); });
+
+            //avatar drop down
+            var selAvatar = document.querySelector("#selAvatar");
+            selAvatar.addEventListener("change", function (e) {
+                var imgAvatar = document.querySelector("#imgAvatar");
+                imgAvatar.src = selAvatar.value;
+            });
+            //add facebook image
+            var option = new Option('facebook', settings.getFaceBookImage());
+            selAvatar.options.add(option);
+
+            //add gravatar image
+            var option = new Option('gravatar', settings.get_gravatar(settings.settings.email, 100));
+            selAvatar.options.add(option);
+
+            var option = document.querySelector('option[value="' + settings.settings.avatar + '"]');
+            if (option) option.selected = true;
 
 
-        //facebook button
-        var btnFacebookLogIn = document.getElementById("btnFacebookLogIn");
-        btnFacebookLogIn.addEventListener("click", function () { fbLogIn(); });
+            //facebook button
+            var btnFacebookLogIn = document.getElementById("btnFacebookLogIn");
+            btnFacebookLogIn.addEventListener("click", function () { fbLogIn(); });
 
-        var btnFacebookLogOut = document.getElementById("btnFacebookLogOut");
-        btnFacebookLogOut.addEventListener("click", function () { fbLogOut(); });
+            var btnFacebookLogOut = document.getElementById("btnFacebookLogOut");
+            btnFacebookLogOut.addEventListener("click", function () { fbLogOut(); });
 
-        if (settings.settings.facebooktoken)
-            btnFacebookLogIn.style.display = 'none';
+            if (settings.settings.facebooktoken)
+                btnFacebookLogIn.style.display = 'none';
 
-        if (!settings.settings.facebooktoken)
-            btnFacebookLogOut.style.display = 'none';
+            if (!settings.settings.facebooktoken)
+                btnFacebookLogOut.style.display = 'none';
 
-        window.onbeforeunload = function (e) {
-            save();
-        }
+        };
+       
 
         var save = function () {
             var settings = new Settings();
@@ -166,6 +166,12 @@
                 }
             }
         }
+        window.addEventListener("beforeunload", function () {
+            save();
+        });
+        window.addEventListener("load", function () {
+            populate();
+        });
 
     </script>
 </body>
