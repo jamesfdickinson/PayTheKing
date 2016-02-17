@@ -16,7 +16,7 @@ var PayTheKingGame = require('./PayTheKingGame');
 var app = express();
 
 var port = process.env.PORT || 8001;
-var version = "1.0.0";
+var version = "1.0.1";
 var httpServer = require('http').createServer(app);
 
 //http server routing

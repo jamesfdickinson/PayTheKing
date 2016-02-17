@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>index.html</title>
+    <!--<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.0.3.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.6.js"></script>-->
+    <script src="https://cdn.socket.io/socket.io-1.4.3.js"></script>
+</head>
+<body>
+    <script> 
+        ////var socket = io('http://jimmyinteractive.com:8888');
+        var socket = io();
+
+        socket.on("connect", function () {
+            startTime = Date.now();
+            socket.emit('ping');
+
+            getRooms();
+        });
+        socket.on('login', function (data) {
+            logMessage('<-- login', data);
+        });
+        socket.on('message', function (data) {
+            logMessage('<-- message', data);
+        });
+        socket.on('sync', function (data) {
+            logMessage('<-- sync', data);
+        });
+        socket.on('joined', function (data) {
+            logMessage('<-- joined', data);
+            getRoom(data);
+        });
+        socket.on('roomChanged', function (data) {
+            logMessage("<-- roomChanged", data);
+            getRoom(data);
+           
+        });
+        socket.on('getRoom', function (data) {
+            logMessage("<-- getRoom", data);
+            var lblRoom = document.getElementById("lblRoom");
+            lblRoom.innerHTML = data.name;
+            var lstUsers = document.getElementById("lstUsers");
+            lstUsers.length = 0;
+            for (i = 0; i < data.users.length; i++) {
+                var user = data.users[i];
+                var el = document.createElement("option");
+                el.textContent = user.name;
+                el.value = user.name;
+                lstUsers.appendChild(el);
+            }
+
+            var lstUsersDetails = document.getElementById("lstUsersDetails");
+            lstUsersDetails.innerHTML = "";
+            for (i = 0; i < data.users.length; i++) {
+                var user = data.users[i];
+                var li = document.createElement("li");
+                if (user.avatar && user.avatar.indexOf("/") === 0) user.avatar = "images/" + user.avatar;
+                li.innerHTML ="<img style='height:75px;' src='" + user.avatar + "' />" + user.name;
+                lstUsersDetails.appendChild(li);
+            }
+        });
+        socket.on('getRooms', function (data) {
+            logMessage("<-- getRooms", data);
+            var lstRooms = document.getElementById("lstRooms");
+            lstRooms.length = 0;
+            for (i = 0; i < data.length; i++) {
+                var room = data[i];
+                var el = document.createElement("option");
+                el.textContent = room;
+                el.value = room;
+                lstRooms.appendChild(el);
+            }
+        });
+        socket.on('getUsers', function (data) {
+            logMessage('<-- getUsers', data);
+            logMessage('----','----Users----');
+            for (i = 0; i < data.length; i++) {
+                var user = data[i];
+                logMessage("room/user", user.room + "     " + user.name + "     " + user.socketid + "     " + user.rank);
+            }
+            logMessage('----', '----Users----');
+        });
+        socket.on('pong', function () {
+            latency = Date.now() - startTime;
+            logMessage("<-- pong", latency);
+        });
+
+        var logMessage = function (event, data) {
+            console.log(data);
+            var txtLog = document.getElementById("txtLog")
+            var m = new Date();
+            var dateString = m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+            txtLog.value = dateString + ": " + event + ": " + JSON.stringify(data) + " \n" + txtLog.value;
+            //var outputDiv = document.getElementById("output")
+            //outputDiv.innerHTML += "<div>" + JSON.stringify(data) + "</div>"
+        }
+        var sendLogin = function (data) {
+            socket.emit('login', data);
+            //socket.emit('login', {
+            //    id: "123",
+            //    name: "jimmy",
+            //    avatar: "https://graph.facebook.com/560706963/picture?type=normal",
+            //    rank: 1233,
+            //    rating: "Gold"
+            //});
+            logMessage("--> login", data);
+        };
+        var sendMessage = function (data) {
+            socket.emit('message', data);
+            logMessage("--> message", data);
+        };
+        var ping = function () {
+            startTime = Date.now();
+            socket.emit('ping');
+            logMessage("--> ping", 0);
+        };
+        var startTime = Date.now();
+
+        var joinRoom = function (data) {
+            //clearLogs();
+            socket.emit('joinRoom', data);
+            logMessage("--> joinRoom", data);
+        };
+        var getUsers = function (data) {
+            socket.emit('getUsers', data);
+            logMessage("--> getUsers", data);
+        };
+        var getRooms = function (data) {
+            socket.emit('getRooms', data);
+            logMessage("--> getRooms", data);
+        };
+        var getRoom = function (data) {
+            socket.emit('getRoom', data);
+            logMessage("--> getRoom", data);
+        };
+        var clearLogs = function () {
+            txtLog.value = "";
+        };
+
+    </script>
+    <div>
+        <button onclick="sendLogin({ name: txtName.value, avatar: txtAvatar.value, rating: txtRating.value });">Login</button>
+        <input id="txtName" type="text" value="Test Name" />
+        <input id="txtRating" type="text" value="1000" />
+        <input id="txtAvatar" type="text" value="https://graph.facebook.com/560706963/picture?type=normal" />
+    </div>
+    <div>
+        <button onclick="sendMessage(txtMessage.value);">Send</button>
+        <input id="txtMessage" type="text" value="test" />
+    </div>
+    <div>
+        <button onclick="ping();">ping</button>
+    </div>
+    <div>
+        <button onclick="clearLogs();">clear</button>
+    </div>
+   
+    <div>
+        <button onclick="joinRoom(txtRoom.value);">joinRoom</button>
+        <input id="txtRoom" type="text" value="room2" />
+    </div>
+    <div>
+        <button onclick="joinRoom('lobby');">joinRoom('lobby')</button>
+        <button onclick="joinRoom('room1');">joinRoom('room1')</button>
+        <button onclick="joinRoom('room2');">joinRoom('room2')</button>
+    </div>
+    <div>
+        <button onclick="getUsers(txtGetUsersFilter.value);">getUsers</button>
+        <input id="txtGetUsersFilter" type="text" value="lobby" />
+    </div>
+    <div>
+        <button onclick="getUsers();">getUsersReport</button>
+    </div>
+    <div>
+        <h2 id="lblRoom">Room Name</h2>
+    </div>
+    <table style="width:100%;">
+        <tr>
+            <td style="width:150px; vertical-align:top;">
+                <div>
+                    <select id="lstRooms" onchange="joinRoom(this.value);" size="10" style="width: 100%;height: 200px;"></select>
+                    <div>
+                        <button onclick="getRooms();">getRooms</button>
+                    </div>
+                </div>
+                <div>
+                    <select id="lstUsers" size="10" style="width: 100%;height: 250px;"></select>
+                   
+
+                   </div>
+            </td>
+            <td>
+                <div>
+                    <textarea id="txtLog" style="width: 100%; height: 500px;"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <ul id="lstUsersDetails" style="width: 100%;"></ul>
+
+
+
+</body>
+</html>

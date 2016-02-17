@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="wrapper">
+        <!--<div class="bar bar-header bar-light">
+            <h1 class="title">bar-light</h1>
+        </div>
+        <div class="content has-header ">-->
+        <!--<div id="preGame">
+
+        </div>-->
+        <div id="game">
+            <div id="top">
+
+                <div id="kingBox">
+                    <div class="king"> </div>
+
+                </div>
+
+                <div id="message" class="bubble">
+                    <div id="messageTitle"></div>
+
+                    <div id="messageDetails"></div>
+
+
+                    <script src="js/socket.io-1.4.5.js"></script>
+                </div>
+
+
+                <progress id="kingprogress" value="0" max="100"></progress>
+            </div>
+            <!--<hr style="clear:both" />-->
+            <!--<img src="images/king-cartoon-clip-art-540px.jpg" style="width:200px" />-->
+
+            <div id="players">
+                <div id="player1" class="player">
+
+                    <img class='playerImg' src="images/Avatars/clown_256.png" />
+                    <div class='playerOffer'></div>
+                    <div class='playerName'></div>
+                    <div class='playerGold'></div>
+                </div>
+            </div>
+
+            <div id="localPlayerDashboard">
+
+                <div id="preGame">
+                    <p>Waiting for Players...</p>
+
+                    <!--<div><button id="btnStart" class="button button-block button-positive">Start Game</button></div>-->
+                </div>
+                <div id="controls">
+
+                    <div style="float:right;"><i class="icon ion-social-usd"></i> Gold: <span id="localGold"></span></div>
+                    <div style="text-align: left;"><i class="ion-arrow-up-a"></i> Offer: <span id="localOffer"></span></div>
+                    <hr style="clear:both" />
+                    <!--<p>Select an amount to offer</p>-->
+                    <button id="btnPay1Gold" class="button">+1 Gold</button>
+                    <button id="btnPay5Gold" class="button">+5 Gold</button>
+                    <button id="btnPay10Gold" class="button">+10 Gold</button>
+                </div>
+                <div id="lost">
+                    <p>You have lost, but you can watch the rest of the game.</p>
+                    <div><div id="btnNewGame1" class="button-block">New Game</div></div>
+                </div>
+                <div id="gameOver">
+                    <p>Game over</p>
+                    <div><div id="btnNewGame3" class="button-block">New Game</div></div>
+
+                </div>
+            </div>
+        </div>
+        <!--<div id="endGame">
+            <h1>Game Over</h1>
+            <h3 id="winner">{} wins!</h3>
+            <button id="btnNewGame" class="button button-block button-positive">New Game</button>
+        </div>-->
+
+        <div id="log"></div>
+        <!--</div>-->
+    </div>
+    <script src="js/socket.io-1.4.5.js"></script>
+    <script src="js/PayTheKingPlayer.js"></script>
+    <script src="js/PayTheKingPlayerComputer.js"></script>
+    <script src="js/PayTheKingGameClient.js"></script>
+    <script src="js/PayTheKingGameUIOnline.js"></script>
+</body>
+</html>
