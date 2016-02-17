@@ -13,12 +13,12 @@
 
         <div id="menu">
             <h1>Pay the King</h1>
-            <div class="king wave" > </div>
-          
+            <div class="king wave"> </div>
+
 
             <a id="btnNewGame" href="game.html" class="button-block">New Game</a>
             <a id="btnNewGame" href="gameOnline.html" class="button-block">Online</a>
-  <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
+            <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
             <div id="player1GamerTag" class="gamerTag">
                 <a href="profile.html">
                     <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
@@ -45,7 +45,7 @@
                 <a href="#/HowToPlay">
                     <img src="images/Buttons/white/questionmark.png" />
                 </a>
-     
+
                 <a href="https://www.facebook.com/847181962036765" target="_system">
                     <img src="images/Buttons/white/heart.png" />
                 </a>
@@ -54,30 +54,34 @@
                 <!--<a href="#/Stats"><img src="images/Buttons/white/stats.png" /></a>-->
                 <a href="#/LeaderBoard"><img src="images/Buttons/white/stats.png" /></a>
             </div>
-           
+
 
         </div>
 
     </div>
     <script src="js/Settings.js"></script>
     <script>
-        var settings = new Settings();
+        var populate = function () {
+            var settings = new Settings();
 
-        var playerName = document.querySelector("#playerName");
-        playerName.innerHTML = settings.settings.name;
+            var playerName = document.querySelector("#playerName");
+            playerName.innerHTML = settings.settings.name;
 
-        var playerImg = document.querySelector("#playerImg");
-        playerImg.src = settings.settings.avatar;
+            var playerImg = document.querySelector("#playerImg");
+            playerImg.src = settings.settings.avatar;
 
-        var level = document.querySelector("#level");
-        level.innerHTML = settings.settings.level;
+            var level = document.querySelector("#level");
+            level.innerHTML = settings.settings.level;
 
-        var rank = document.querySelector("#rank");
-        rank.innerHTML = settings.settings.rank;
+            var rank = document.querySelector("#rank");
+            rank.innerHTML = settings.settings.rank;
 
-        var rating = document.querySelector("#rating");
-        rating.innerHTML = settings.settings.rating;
-
+            var rating = document.querySelector("#rating");
+            rating.innerHTML = settings.settings.rating;
+        }
+        window.addEventListener("load", function () {
+            populate();
+        });
     </script>
 </body>
 </html>
