@@ -3,10 +3,12 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
     <link href="css/StyleSheet.css" rel="stylesheet" />
-    <!--<link href="lib/ionic/css/ionic.css" rel="stylesheet">-->
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet" />-->
 </head>
 <body>
     <div id="wrapper">
@@ -15,10 +17,10 @@
             <h1>Pay the King</h1>
             <div class="king wave"> </div>
 
-
-            <a id="btnNewGame" href="game.html" class="button-block">New Game</a>
-            <a id="btnNewGame" href="gameOnline.html" class="button-block">Online</a>
-            <a id="btnHowToPlay" href="howToPlay.html" class="button-block"> How to Play</a>
+            <!--<a id="btnNewGame" href="login.html" class="button-block">Login</a>
+            <a id="btnNewGame" href="game.html" class="button-block">New Game</a>-->
+            <a id="btnNewGame" href="gameOnline.html" class="button-block-large">Play</a>
+            <a id="btnHowToPlay" href="howToPlay.html" class="button-block-large"> How to Play</a>
             <div id="player1GamerTag" class="gamerTag">
                 <a href="profile.html">
                     <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
@@ -42,7 +44,7 @@
                 <a id="rateLink" href="" ng-click="rateGame()">
                     <img src="images/Buttons/white/favs.png" />
                 </a>
-                <a href="#/HowToPlay">
+                <a href="howToPlay.html">
                     <img src="images/Buttons/white/questionmark.png" />
                 </a>
 
@@ -68,7 +70,50 @@
         }
     </script>
     <script src="js/Settings.js"></script>
+    <script src="js/Gamification.js"></script>
+    <script src="js/Analytics.js"></script>
+    <script src="js/Analytics_Google.js"></script>
+    <script src="js/AnalyticsGA.js"></script>
     <script>
+        var checkIfLoggedIn = function () {
+            var settings = new Settings();
+            //forward to login if never logged in
+            if (!settings.settings["skipLogin"] && !settings.settings["id"] && !settings.settings["facebooktoken"] && !settings.settings["email"]) {
+                window.location = 'login.html';
+                return;
+            }
+        }
+        //update user data on server
+        var updateUser = function () {
+            var settings = new Settings();
+            var userData = settings.settings;
+            Gamification.UpdateUser(userData["id"], userData["name"], userData["deviceId"], userData["facebookid"], userData["avatar"], userData["email"], function (data) {
+                var settings = new Settings();
+                var oldId = settings.settings.id;
+                settings.settings.id = data.Id;
+                settings.save();
+                if (settings.settings.id)
+                    getScore();
+            });
+        }
+        //get score/rank from server 
+        var getScore = function () {
+            var settings = new Settings();
+            if (settings.settings["id"]) {
+                Gamification.GetUser(settings.settings["id"], null, function (data) {
+                    var settings = new Settings();
+                    if (data == null) {
+                        console.log('issue getting data from server, try again later.');
+                        return;
+                    }
+                    if(data.Rating)opponentIdsettings.settings.rating = data.Rating;
+                    if (data.Score) settings.settings.score = data.Score;
+                    if (data.League) settings.settings.rank = data.League;
+                    settings.save();
+                    populate();
+                });
+            }
+        };
         var populate = function () {
             var settings = new Settings();
 
@@ -90,8 +135,12 @@
         }
         //other load times http://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the
         window.addEventListener("DOMContentLoaded", function () {
+            checkIfLoggedIn();
             populate();
-
+            updateUser();
+            Analytics.TrackStart("PayTheKing", '1.0.0');
+            AnalyticsGA.TrackStart("PayTheKing", '1.0.0');
+            AnalyticsGA.TrackPage("MainMenu");
         });
     </script>
 </body>

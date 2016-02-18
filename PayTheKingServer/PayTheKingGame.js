@@ -1,9 +1,10 @@
 ﻿var PayTheKingPlayerComputer = require('./PayTheKingPlayerComputer');
+var Gamification = require('./Gamification');
 
-function PayTheKingGame(name) {
+function PayTheKingGame(id) {
     //private var
     var _this = this;
-    this.name = name;
+    this.id = id;
     this.state = "PreGame";
     this.round = 0;
     this.messageTitle = "Wating for Players...";
@@ -25,7 +26,7 @@ function PayTheKingGame(name) {
     this.sendEvent = function (event, value, player) {
         //console log event
         if (console.log != undefined && this.debug == true)
-            console.log(name + " : "+ event + " : " + value + " : " + player + " : " + this.getElaspedTime());
+            console.log(this.id + " : "+ event + " : " + value + " : " + player + " : " + this.getElaspedTime());
         
         //add to event log
         _this.eventLog.push({ 'event': event, 'value': value, 'player': player, timestamp: this.getElaspedTime() });
@@ -205,25 +206,45 @@ function PayTheKingGame(name) {
     this.endGame = function () {
         clearTimeout(_this.roundTimer);
         
-        _this.winner = "No One";
+       
         for (var i in _this.players) {
             var player = _this.players[i];
-            if (!player.isBooted)
-                _this.winner = player.name;
+            if (!player.isBooted) {
+                _this.winner = player;
+            }
         }
-        
-        _this.messageTitle = _this.winner + " wins!";
+        if (_this.winner == null)
+            _this.messageTitle =  "No One  wins!";
+        if (_this.winner != null)
+            _this.messageTitle = _this.winner.name + " wins!";
+
         _this.messageDetails = "Game Over";
         
-       
         _this.state = "GameOver";
         _this.kingState = 'happy';
-        if (_this.winner == "No One") _this.kingState = 'mad';
+
+        if (_this.winner == null) _this.kingState = 'mad';
       
         _this.sendEvent("endGame");
-        //restart game
-       
-       
+
+        var elaspedTime = (Date.now() - _this.startTime) / 1000;
+        _this.reportScoresToServer(_this.id, _this.players,_this.winner, elaspedTime);
     }
+    this.reportScoresToServer = function (matchId,players,winner, elaspedTime) {
+        // var loseAmount = -1 * Math.max(1,Math.round(10/ players.length));
+        var loseAmount = -1 ;
+        var minWinAmount = players.length;
+        var gameId = 5;
+        for (var i=0; i < players.length; i++) {
+            var player = players[i];
+            if (winner == player) {
+                Gamification.ReportRankedGame(gameId, matchId, 0, player.id, 0,Math.max( player.gold, minWinAmount), elaspedTime, '');
+            }
+            else {
+                Gamification.ReportRankedGame(gameId, matchId, 0, player.id, 0, loseAmount, elaspedTime, '');
+            }
+        }
+    }
+
 }
 module.exports = PayTheKingGame;

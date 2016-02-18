@@ -20,6 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="Gamification.js" />
     <Compile Include="PayTheKingGame.js" />
     <Compile Include="PayTheKingPlayerComputer.js" />
     <Compile Include="PayTheKingPlayer.js" />

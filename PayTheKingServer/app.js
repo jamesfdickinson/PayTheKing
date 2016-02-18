@@ -289,9 +289,9 @@ var findOpenRoom = function (socket, user) {
     //join room
     rooms[newRoom].join(socket, user);
 }
-function Room(name) {
+function Room(id) {
     var _this = this;
-    this.name = name;
+    this.id = id;
     this.users = [];
     this.isClosed = false;
 
@@ -299,8 +299,8 @@ function Room(name) {
         //leave old room - socket
         socket.leave(user.room);
         //join room - socket
-        socket.join(_this.name);
-        user.room = _this.name;
+        socket.join(_this.id);
+        user.room = _this.id;
 
         //join room - game
         this.users.push(user);
@@ -359,14 +359,14 @@ function Room(name) {
                 roundTimeElapsed: _this.payTheKingGame.roundTimeElapsed
             }
             if (eventName == 'join' || eventName == 'leave' || eventName == 'start' || eventName == 'startRound' || eventName == 'endRound' || eventName == 'endGame')
-                io.sockets.to(_this.name).emit('sync', eventName, stateData);
+                io.sockets.to(_this.id).emit('sync', eventName, stateData);
             if (event.event == 'roundTimeElapsed')
-                io.sockets.to(_this.name).emit('sync', eventName, {
+                io.sockets.to(_this.id).emit('sync', eventName, {
                     roundDuration: _this.payTheKingGame.roundDuration,
                     roundTimeElapsed: _this.payTheKingGame.roundTimeElapsed
                 });
             if (event.event == 'offer')
-                io.sockets.to(_this.name).emit('message', event.player.name + ' offered: ' + event.value);
+                io.sockets.to(_this.id).emit('message', event.player.name + ' offered: ' + event.value);
         }
     }
     this.dispose = function (){
@@ -374,7 +374,7 @@ function Room(name) {
         _this.payTheKingGame.onEvent = null;
         //this.payTheKingGame.dispose();
     }
-    this.payTheKingGame = new PayTheKingGame(this.name);
+    this.payTheKingGame = new PayTheKingGame(this.id);
     this.payTheKingGame.onEvent = this.gameEvent;
 }
 

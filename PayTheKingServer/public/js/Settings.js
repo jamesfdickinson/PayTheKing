@@ -9,7 +9,7 @@ function Settings() {
         'avatar': 'images/Avatars/default-avatar.png',
         'facebookid': '0',
         'facebooktoken': null,
-        'id': Math.floor((Math.random() * 1000000) + 1),// set random id
+        'id': null,// set random id
         'rating': 1000,
         'rank': 'Bronze',
         'level': 1,
@@ -37,7 +37,7 @@ function Settings() {
             'avatar': 'images/Avatars/default-avatar.png',
             'facebookid': 0,
             'facebooktoken': null,
-            'id': Math.floor((Math.random() * 1000000) + 1),// set random id
+            'id': null,
             'rating': 1000,
             'rank': 'Bronze',
             'level': 1,

@@ -9,18 +9,26 @@
     height: 100%;
     xcolor: white;
     background: #4A93EF;
+      color:white;
     xbackground: linear-gradient(#B9DFF6, #4A93EF);
     font-family: Arial, Helvetica, sans-serif;
 }
 /*removes the 300ms delay*/
+html {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
 a[href], button {
-    -ms-touch-action: manipulation; /* IE10 */
-    touch-action: manipulation;     /* IE11 */
+    -ms-touch-action: none; /* IE10 */
+    touch-action: none; /* IE11 */
+    cursor:pointer;
 }
 /*fix view port in wp8*/
-@-ms-viewport{
-	width: device-width;
-}
+@-webkit-viewport{width:device-width}
+@-moz-viewport{width:device-width}
+@-ms-viewport{width:device-width}
+@-o-viewport{width:device-width}
+@viewport{width:device-width}
 #wrapper {
     max-width: 700px;
     margin: 0 auto;
@@ -29,7 +37,7 @@ a[href], button {
 #menu {
     padding: 10px 15px;
     text-align: center;
-    max-width: 400px;
+    max-width: 350px;
     margin: 0px auto;
 }
 
@@ -44,8 +52,28 @@ a[href], button {
         margin: 10px 10px 10px 10px;
     }
 
+    #login {
+    padding: 10px 15px;
+    text-align: center;
+    max-width: 400px;
+    margin: 0px auto;
+    color:white;
+}
 
+    #login h1 {
+        margin: 10px 10px;
+        color: white;
+        text-shadow: 2px 2px #000000;
+        xfont-family: 'Crimson Text', Georgia, Times, serif;
+    }
 
+ #login .loginMenu{
+      margin: 100px 0px;
+ }
+ 
+  #login .skipLogin{
+      text-align:center; margin:50px auto 0px auto; clear:both;
+ }
 
 .PreGame #preGame {
     display: block;
@@ -103,6 +131,7 @@ a[href], button {
     display: inline-block;
     background-color: lightskyblue;
     background-color: #C4E8FF;
+    color:black;
     clear: both;
     margin: 3px 3px;
     transition: visibility 0s, opacity 1.0s linear;
@@ -277,6 +306,7 @@ div.king:active {
 #localPlayerDashboard {
     clear: both;
     background-color: aliceblue;
+    color:black;
     padding: 10px 10px;
     position: fixed;
     left: 0;
@@ -407,6 +437,7 @@ div.king:active {
     xmargin: 0 0 0 120px;
     padding: 10px;
     background: #FFFFFF;
+    color:black;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -452,6 +483,7 @@ div.king:active {
     }
 
     #howToPlay .boxed {
+        color:black;
         padding: 10px 15px;
         xborder: solid 2px gray;
         text-align: left;
@@ -604,4 +636,59 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
 
     .minibuttons img {
         width: 35px;
+    }
+
+
+    .smallButton2 {
+    margin: 10px 0px 5px 0px;
+    max-width: 250px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 15px 0 0 40px;
+    text-align: center;
+    background-size: 300px 50px;
+   margin: 10px auto;
+   display:block;
+}
+
+    .smallButton2 a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+    
+ul {
+    list-style: none;
+    padding: 0px 3px;
+    min-width: 260px;
+    xmax-width: 320px;
+    xmargin: 0px auto;
+}
+
+li {
+    margin: 5px 0px 5px 0px;
+    xheight: 50px;
+}
+
+    li a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+
+
+    li div.title {
+        font-size: 30px;
+        padding: 10px 0 0 95px;
+    }
+
+    li div.description {
+        padding: 6px 0 0 140px;
+        font-size: 12px;
+    }
+
+    li div.badge {
+        float: right;
+        margin: 0px 10px;
+        font-size: 10px;
     }
