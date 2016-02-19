@@ -10,7 +10,7 @@
     xcolor: white;
     background: #4A93EF;
       color:white;
-    xbackground: linear-gradient(#B9DFF6, #4A93EF);
+    background: linear-gradient(#B9DFF6, #4A93EF);
     font-family: Arial, Helvetica, sans-serif;
 }
 /*removes the 300ms delay*/
