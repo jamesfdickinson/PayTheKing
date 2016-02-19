@@ -24,7 +24,13 @@
     <Compile Include="PayTheKingGame.js" />
     <Compile Include="PayTheKingPlayerComputer.js" />
     <Compile Include="PayTheKingPlayer.js" />
+    <Compile Include="public\js\Analytics.js" />
+    <Compile Include="public\js\AnalyticsGA.js" />
+    <Compile Include="public\js\Analytics_Google.js" />
+    <Compile Include="public\js\Facebook.js" />
     <Compile Include="public\js\fastclick.js" />
+    <Compile Include="public\js\Gamification.js" />
+    <Compile Include="public\js\openfb.js" />
     <Compile Include="public\js\PayTheKingGame.js" />
     <Compile Include="public\js\PayTheKingGameClient.js" />
     <Compile Include="public\js\PayTheKingGameUI.js" />
@@ -36,7 +42,6 @@
     <Content Include="package.json" />
     <Compile Include="app.js" />
     <Content Include="public\css\images\BackButton.png" />
-    <Content Include="public\css\images\Thumbs.db" />
     <Content Include="public\css\StyleSheet.css" />
     <Content Include="public\game.html" />
     <Content Include="public\gameOnline.html" />
@@ -73,6 +78,7 @@
     <Content Include="public\images\ButtonSettings.png" />
     <Content Include="public\images\ButtonStar.png" />
     <Content Include="public\images\Buttons\other\bar-chart-7.png" />
+    <Content Include="public\images\Buttons\other\coin.png" />
     <Content Include="public\images\Buttons\other\fbLike.png" />
     <Content Include="public\images\Buttons\other\fbShare.png" />
     <Content Include="public\images\Buttons\other\source.txt" />
@@ -176,9 +182,10 @@
     <Content Include="public\images\Kings\small\3433596_small %28Custom%29.png" />
     <Content Include="public\images\Kings\small\3433598_small %28Custom%29.png" />
     <Content Include="public\images\Kings\small\3433600_small %28Custom%29.png" />
-    <Content Include="public\images\Thumbs.db" />
     <Content Include="public\images\wood.jpg" />
     <Content Include="public\index.html" />
+    <Content Include="public\login.html" />
+    <Content Include="public\oauthcallback.html" />
     <Content Include="public\profile.html" />
     <Content Include="public\test.html" />
   </ItemGroup>
