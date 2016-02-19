@@ -26,13 +26,17 @@
                     <img class="gamerTagImage" id="playerImg" src="images/Avatars/default-avatar.png" />
                     <div style="float:right;"><img style="width:35px;height:35px;" src="images/Buttons/white-without-circle/settings.png" /></div>
                     <div id="playerName" class='title'>Player1234</div>
-                    <div class='description'>
+                    <div class='description hidden'>
                         <img class="miniIcon" src="images/Buttons/other/Star.png" />
                         Level <span id="level">5</span>
                     </div>
                     <div class='description'>
+                        <img class="miniIcon" src="images/Buttons/other/coin.png" />
+                        <span id="score">1200</span>
+                    </div>
+                    <div class='description'>
                         <img class="miniIcon" src="images/Buttons/other/Sports_medal_64.png" />
-                        <span id="rank">Silver</span> <span id="rating">(1200)</span>
+                        <span id="rank">Silver</span>  <span id="rating" class="hidden">(1200)</span>
                     </div>
                     <!--<div class="description">
                         <img class="miniIcon" src="images/Buttons/other/Throphy.png" />
@@ -41,20 +45,24 @@
                 </a>
             </div>
             <div class="minibuttons" style="text-align:center;">
-                <a id="rateLink" href="" ng-click="rateGame()">
+                <!--<a id="rateLink" href="" >
                     <img src="images/Buttons/white/favs.png" />
-                </a>
+                </a>-->
                 <a href="howToPlay.html">
                     <img src="images/Buttons/white/questionmark.png" />
                 </a>
-
+                <a id="comLink" href="mailto:payTheKing@jimmyinteractive.com?subject=payTheKing_Feedback&body=" target="_system">
+                    <img src="images/Buttons/white/mail.png" />
+                </a>
                 <a href="https://www.facebook.com/847181962036765" target="_system">
                     <img src="images/Buttons/white/heart.png" />
                 </a>
-
-                <a href="#/Achievements"><img src="images/Buttons/white/achievement.png" /></a>
-                <!--<a href="#/Stats"><img src="images/Buttons/white/stats.png" /></a>-->
-                <a href="#/LeaderBoard"><img src="images/Buttons/white/stats.png" /></a>
+                <!--<a href="#/Achievements" >
+                    <img src="images/Buttons/white/achievement.png" />
+                </a>-->
+                <a href='#' onclick="openLeaderboard()">
+                    <img src="images/Buttons/white/stats.png" />
+                </a>
             </div>
 
 
@@ -75,6 +83,10 @@
     <script src="js/Analytics_Google.js"></script>
     <script src="js/AnalyticsGA.js"></script>
     <script>
+        var openLeaderboard = function () {
+            var settings = new Settings();
+            window.location = "https://jimmyinteractive.com/gamification/LeaderboadView/byscore/5?user=" + settings.settings.name;
+        }
         var checkIfLoggedIn = function () {
             var settings = new Settings();
             //forward to login if never logged in
@@ -96,7 +108,7 @@
                     getScore();
             });
         }
-        //get score/rank from server 
+        //get score/rank from server
         var getScore = function () {
             var settings = new Settings();
             if (settings.settings["id"]) {
@@ -106,7 +118,7 @@
                         console.log('issue getting data from server, try again later.');
                         return;
                     }
-                    if(data.Rating)opponentIdsettings.settings.rating = data.Rating;
+                    if (data.Rating) settings.settings.rating = data.Rating;
                     if (data.Score) settings.settings.score = data.Score;
                     if (data.League) settings.settings.rank = data.League;
                     settings.save();
@@ -131,6 +143,9 @@
 
             var rating = document.querySelector("#rating");
             rating.innerHTML = settings.settings.rating;
+
+            var score = document.querySelector("#score");
+            score.innerHTML = settings.settings.score;
 
         }
         //other load times http://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the

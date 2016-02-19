@@ -21,7 +21,7 @@ Gamification.ReportRankedGame = function (gameId, matchId, level, userId, oppone
     if (!matchId || matchId == 0) matchId = "";
     if (!level || level == 0) level = 0;
     if (!userId || userId == 0) userId = "";
-    if (!opponentId || opponentId == 0) opponentId = "";
+    if (!opponentId || opponentId == 0) opponentId = 0;
     if (!score || score == 0) score = "";
     if (!duration || duration == 0) duration = 0;
     if (!tag || tag == 0) tag = "";

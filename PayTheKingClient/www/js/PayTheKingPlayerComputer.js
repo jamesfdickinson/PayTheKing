@@ -34,24 +34,29 @@
             name: 'InsaneMonkey',
             avatar: 'images/Avatars/InsaneMonkey.png'
         }, {
+            id: '-119',
             name: 'Spy',
             avatar: 'images/Avatars/spyware_256.png'
         }, {
+            id: '-118',
             name: 'CrazyNinja',
             avatar: 'images/Avatars/CrazyNinja.png'
         }, {
+            id: '-117',
             name: 'king',
             avatar: 'images/Avatars/king_256.png'
         }, {
-            name: 'Lib',
+            id: '-116', name: 'Lib',
             avatar: 'images/Avatars/librarian_256.png'
         }, {
+            id: '-115',
             name: 'Joey',
             avatar: 'images/Avatars/user_256.png'
         }, {
+            id: '-114',
             name: 'Arrrr',
             avatar: 'images/Avatars/piracy_256.png'
-        } , {
+        }, {
             id: '-113',
             name: 'Spot',
             avatar: 'images/Avatars/user_256.png'

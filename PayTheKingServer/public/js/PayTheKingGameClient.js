@@ -1,6 +1,7 @@
-﻿function PayTheKingGameClient() {
+﻿function PayTheKingGameClient(id) {
     //private var
     var _this = this;
+    this.id = id;
     this.state = "PreGame";
     this.round = 0;
     this.messageTitle = "Wating for Players...";
@@ -19,7 +20,7 @@
 
     //log on to server
    // var serverUrl = 'http://localhost:8001/';
-    var serverUrl = 'https://paythekingserver.azurewebsites.net/';
+    var serverUrl = 'https://paythekingserver.azurewebsitesxxxx.net/';
     //if (Config && Config.SocketIOUrl) serverUrl = Config.SocketIOUrl;
     var os = 'unknown';
    // if (Config && Config.OS) os = Config.OS;
@@ -30,7 +31,10 @@
     socket.on("connect", function () {
         _this.ping();
     });
-
+    socket.on('connect_error', function () {
+        console.log('Failed to connect to server');
+        _this.sendEvent('NetworkError');
+    });
     socket.on('pong', function (data) {
         var latency = Date.now() - data;
         logMessage("<-- pong", latency);
@@ -40,6 +44,12 @@
     });
     var logMessage = function (event, data) {
         console.log(data);
+    }
+    this.dispose = function () {
+        //clearTimeout(_this.joinTimer);
+        clearTimeout(_this.roundTimer);
+        this.onEvent = null;
+        if(socket)socket.disconnect();
     }
     this.pay = function (playerId, amount) {
         //update local for faster feedback

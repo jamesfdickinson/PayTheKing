@@ -415,8 +415,8 @@ div.king:active {
     }
 
     .gamerTag img.miniIcon {
-        width: 10px;
-        height: 10px;
+       width: 13px;
+    height: 13px;
         margin-right: 10px;
     }
 
@@ -427,8 +427,12 @@ div.king:active {
     }
 
     .gamerTag div.description {
-        padding: 2px 15px 1px 90px;
-        font-size: 10px;
+       padding: 1px 15px 2px 90px;
+        xvertical-align: top;
+        font-size: 12px;
+    }
+     .gamerTag div.description span {
+       
     }
 
 /*http://ilikepixels.co.uk/drop/bubbler/*/
@@ -691,4 +695,8 @@ li {
         float: right;
         margin: 0px 10px;
         font-size: 10px;
+    }
+
+    .hidden{
+        display:none;
     }

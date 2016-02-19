@@ -2,8 +2,9 @@
     var _this = this;
 
     this.id = Math.floor((Math.random() * 1000000) + 1);
-    this.name = name;
-    this.avatar = 'images/Avatars/clown_256.png';
+    this.name = 'Player' + this.id;
+    if(name) this.name = name;
+    this.avatar = 'images/Avatars/default-avatar.png';
     this.gold = 100;
     this.offer = 0;
     this.isBooted = false;

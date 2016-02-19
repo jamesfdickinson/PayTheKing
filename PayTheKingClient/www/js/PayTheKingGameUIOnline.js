@@ -5,39 +5,37 @@
     this.game;
     this.uiTimer;
     var logDiv = document.getElementById("log");
-    document.getElementById("btnPay1Gold").addEventListener("click", function () { _this.pay(1); });
-    document.getElementById("btnPay5Gold").addEventListener("click", function () { _this.pay(5); });
-    document.getElementById("btnPay10Gold").addEventListener("click", function () { _this.pay(10); });
-    // document.getElementById("btnNewGame").addEventListener("click", function () { location.href = 'index.html'; });
-    document.getElementById("btnNewGame1").addEventListener("click", function () { location.href = 'index.html'; });
-    document.getElementById("btnPlayAgain").addEventListener("click", function () { location.reload();  });
-    //document.getElementById("btnStart").addEventListener("click", function () { _this.game.start(); });
-    document.getElementById("btnBack").addEventListener("click", function () { location.href = 'index.html'; });
-     
-    this.computerCount = 6;
-    this.joinTimer;
+
+    var btnPay1Gold = document.getElementById("btnPay1Gold");
+    if (btnPay1Gold) btnPay1Gold.addEventListener("click", function () { _this.pay(1); });
+
+    var btnPay5Gold = document.getElementById("btnPay5Gold");
+    if (btnPay5Gold) btnPay5Gold.addEventListener("click", function () { _this.pay(5); });
+
+    var btnPay10Gold = document.getElementById("btnPay10Gold")
+    if (btnPay10Gold) btnPay10Gold.addEventListener("click", function () { _this.pay(10); });
+
+    var btnNewGame1 = document.getElementById("btnNewGame1")
+    if (btnNewGame1) btnNewGame1.addEventListener("click", function () { location.href = 'index.html'; });
+
+    var btnPlayAgain = document.getElementById("btnPlayAgain")
+    if (btnPlayAgain) btnPlayAgain.addEventListener("click", function () { location.reload(); });
+
+    var btnBack = document.getElementById("btnBack")
+    if (btnBack) btnBack.addEventListener("click", function () { location.href = 'index.html'; });
+
+   
 
 
-    this.addPlayer = function () {
-        _this.computerCount -= 1;
-        var player = new PayTheKingPlayerComputer();
-        _this.game.join(player);
-        if (_this.computerCount == 0) {
-            clearInterval(_this.joinTimer);
-        }
-    }
     this.start = function () {
 
         //setup game
         this.game = new PayTheKingGameClient();
         this.game.onEvent = this.onEvent;
 
-        
-
         //setup players
-        this.localPlayer = new PayTheKingPlayerLocal("Jimmy");
-        this.localPlayer.avatar = 'https://graph.facebook.com/560706963/picture?type=normal';
-
+        this.localPlayer = new PayTheKingPlayerLocal();
+     
         //get user settings
         if (typeof Settings != 'undefined') {
             var settings = new Settings();
@@ -49,39 +47,23 @@
             this.localPlayer.level = settings.settings.level;
         }
 
-        //todo: get the rest of users stats
         this.game.join(this.localPlayer);
 
-      
 
-
-        //clear 
-        var playersDiv = document.getElementById("players");
-        playersDiv.innerHTML = '';
-        var log = document.querySelector("#log");
-        log.innerHTML = '';
-
-
-        // this.game.start();
-
-        //clearInterval(this.uiTimer);
-        //this.uiTimer = setInterval(_this.UpdateUI, 200);
-
-
-        //this.computerCount = 6;
-        //clearInterval(this.joinTimer);
-        //this.joinTimer = setInterval(_this.addPlayer, 1000);
     }
     this.pay = function (amount) {
-        // _this.localPlayer.pay(amount);
-
         _this.game.pay(_this.localPlayer.id, amount);
     }
     this.onEvent = function (event) {
-        //var newNode = document.createElement('div');
-        //newNode.innerHTML = event.event + " : " + event.value + " : " + event.player + " : " + event.timestamp;
-        //logDiv.appendChild(newNode);
-
+        //check if connected to the internet, if not play locally. dispose and start local mode
+        //note: could this be done in the core? merge the two cores
+        if (event.event == 'NetworkError') {
+            _this.game.dispose();
+            _this.game = new PayTheKingGame();
+            _this.game.onEvent = _this.onEvent;
+            _this.game.join(_this.localPlayer);
+            return;
+        }
         _this.UpdateUI();
     }
     this.UpdateUI = function () {
@@ -102,7 +84,6 @@
                 divPlayer.className = "player";
                 if (player.isLocal) divPlayer.className += " localPlayer";
 
-                //divPlayer.innerHTML =  " <img class='playerImg' src='"+player.avatar+"'  /><div class='playerName'></div><div class='playerGold'></div><div class='playerOffer'></div></div>";
                 divPlayer.innerHTML = '';
                 divPlayer.innerHTML += "<img class='playerImg' src='" + player.avatar + "' />";
                 divPlayer.innerHTML += "<div class='playerOffer'></div>";
@@ -110,19 +91,6 @@
                 divPlayer.innerHTML += "<div class='playerGold'></div>";
                 playersDiv.appendChild(divPlayer);
 
-                //var divName = document.createElement('div');
-                //divName.className = 'playerName';
-                //divPlayer.appendChild(divName);
-
-                //var divGold = document.createElement('div');
-                //divGold.className = 'playerGold';
-                //divPlayer.appendChild(divGold);
-
-                //var divOffer = document.createElement('div');
-                //divOffer.className = 'playerOffer';
-                //divPlayer.appendChild(divOffer);
-
-                //_this.playerUIs[i] = divPlayer;
             }
         }
         //remove all missing
@@ -176,36 +144,12 @@
 
         }
 
-
-        //var roundElaspedTime = Date.now() - _this.game.roundStartTime;
-        //// var timeLeftInSeconds = Math.floor((_this.game.roundDuration - roundElaspedTime) / 1000);
-        //var timeLeftInSeconds = (_this.game.roundDuration - roundElaspedTime) / 1000;
-        //if (timeLeftInSeconds < 0) timeLeftInSeconds = 0;
-
-        ////var countDown = document.querySelector("#countDown");
-        ////countDown.innerHTML = timeLeftInSeconds;
-
-        //var kingprogress = document.querySelector("#kingprogress");
-        //kingprogress.value = (timeLeftInSeconds * 1000 / _this.game.roundDuration) * 100;
-
-
         var kingprogress = document.querySelector("#kingprogress");
         kingprogress.value = 100 - ((_this.game.roundTimeElapsed / _this.game.roundDuration) * 100);
 
         var king = document.querySelector(".king");
         king.className = "king " + _this.game.kingState;
 
-
-        //if (_this.game.state == "PreGame" || _this.game.state == "Playing") {
-        //    var endGame = document.querySelector("#endGame");
-        //    endGame.style.display = 'none';
-        //}
-        //if (_this.game.state == "GameOver") {
-        //    var endGame = document.querySelector("#endGame");
-        //    endGame.style.display = 'block';
-        //    var winner = document.querySelector("#winner");
-        //    winner.innerHTML = _this.game.winner + " wins!";
-        //}
 
         var messageTitle = document.querySelector("#messageTitle");
         messageTitle.innerHTML = _this.game.messageTitle;
