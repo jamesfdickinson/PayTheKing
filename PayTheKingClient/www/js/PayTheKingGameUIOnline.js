@@ -24,7 +24,7 @@
     var btnBack = document.getElementById("btnBack")
     if (btnBack) btnBack.addEventListener("click", function () { location.href = 'index.html'; });
 
-   
+
 
 
     this.start = function () {
@@ -35,7 +35,7 @@
 
         //setup players
         this.localPlayer = new PayTheKingPlayerLocal();
-     
+
         //get user settings
         if (typeof Settings != 'undefined') {
             var settings = new Settings();
@@ -52,7 +52,9 @@
 
     }
     this.pay = function (amount) {
-        _this.game.pay(_this.localPlayer.id, amount);
+        var playerId = _this.localPlayer.id;
+        //pay
+        _this.game.pay(playerId, amount);
     }
     this.onEvent = function (event) {
         //check if connected to the internet, if not play locally. dispose and start local mode
@@ -60,6 +62,7 @@
         if (event.event == 'NetworkError') {
             _this.game.dispose();
             _this.game = new PayTheKingGame();
+            _this.game.autoComputerJoinWaitTime = 3000;
             _this.game.onEvent = _this.onEvent;
             _this.game.join(_this.localPlayer);
             return;

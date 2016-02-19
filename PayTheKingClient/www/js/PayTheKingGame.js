@@ -138,13 +138,22 @@
             _this.endRound();
         }
     }
-    this.pay = function (player, amount) {
-        if (player.gold < player.offer + amount) {
-            _this.sendEvent("offerFailed:Not Enough Gold", 0, player);
-            return;
+    this.pay = function (playerId, amount) {
+        //find player
+        var player;
+        for (var i in _this.players) {
+            if (_this.players[i].id == playerId) {
+                player = _this.players[i];
+            }
         }
-        player.offer += amount;
-        
+        if (player) {
+            if (player.gold < player.offer + amount) {
+                _this.sendEvent("offerFailed:Not Enough Gold", 0, player);
+                return;
+            }
+            player.offer += amount;
+        }
+       
         _this.sendEvent("offer", amount, player);
     }
     this.endRound = function () {

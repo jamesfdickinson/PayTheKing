@@ -53,6 +53,7 @@
     }
     this.pay = function (playerId, amount) {
         //update local for faster feedback
+        //find player
         var player;
         for (var i in _this.players) {
             if (_this.players[i].id == playerId) {
@@ -66,6 +67,8 @@
             }
             player.offer += amount;
         }
+
+        //_this.sendEvent("offer", amount, player);
         _this.sendEvent('paidLocally');
 
         //update server

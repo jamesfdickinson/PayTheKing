@@ -329,14 +329,7 @@ function Room(id) {
         }
     }
     this.pay = function (playerId, amount) {
-        //find player
-        for (var i in _this.payTheKingGame.players) {
-            var player = _this.payTheKingGame.players[i];
-            if (player.id == playerId) {
-                //pay
-                _this.payTheKingGame.pay(player, amount);
-            }
-        }
+        _this.payTheKingGame.pay(playerId, amount);
     }
     this.gameEvent = function (event) {
         var eventName = event.event;

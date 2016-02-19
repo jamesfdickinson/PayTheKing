@@ -26,7 +26,7 @@ function PayTheKingGame(id) {
     this.sendEvent = function (event, value, player) {
         //console log event
         if (console.log != undefined && this.debug == true)
-            console.log(this.id + " : "+ event + " : " + value + " : " + player + " : " + this.getElaspedTime());
+            console.log(this.id + " : " + event + " : " + value + " : " + player + " : " + this.getElaspedTime());
         
         //add to event log
         _this.eventLog.push({ 'event': event, 'value': value, 'player': player, timestamp: this.getElaspedTime() });
@@ -42,7 +42,7 @@ function PayTheKingGame(id) {
     this.getElaspedTime = function () {
         return (Date.now() - this.startTime) / 1000;
     }
-
+    
     this.addComputerPlayer = function () {
         var player = new PayTheKingPlayerComputer();
         _this.join(player);
@@ -56,7 +56,7 @@ function PayTheKingGame(id) {
         if (_this.players.length >= _this.countToAutoStart) {
             _this.start();
         }
-
+        
         //stop computer join timer
         clearTimeout(_this.joinTimer);
         //start computer join timer
@@ -74,7 +74,7 @@ function PayTheKingGame(id) {
     }
     this.leave = function (player) {
         //todo: computer take over if game started?
-
+        
         //note: for now leave the player there so there are stil players when someone wins even if they left, unless game has not started
         if (_this.state == "PreGame") {
             var i = _this.players.indexOf(player);
@@ -131,16 +131,25 @@ function PayTheKingGame(id) {
         if (_this.roundTimeElapsed < _this.roundDuration) {
             clearTimeout(_this.roundTimer);
             _this.roundTimer = setTimeout(_this.midRound, 500);
-        } else { 
+        } else {
             _this.endRound();
         }
     }
-    this.pay = function (player, amount) {
-        if (player.gold < player.offer + amount) {
-            _this.sendEvent("offerFailed:Not Enough Gold", 0, player);
-            return;
+    this.pay = function (playerId, amount) {
+        //find player
+        var player;
+        for (var i in _this.players) {
+            if (_this.players[i].id == playerId) {
+                player = _this.players[i];
+            }
         }
-        player.offer += amount;
+        if (player) {
+            if (player.gold < player.offer + amount) {
+                _this.sendEvent("offerFailed:Not Enough Gold", 0, player);
+                return;
+            }
+            player.offer += amount;
+        }
         
         _this.sendEvent("offer", amount, player);
     }
@@ -206,7 +215,7 @@ function PayTheKingGame(id) {
     this.endGame = function () {
         clearTimeout(_this.roundTimer);
         
-       
+        
         for (var i in _this.players) {
             var player = _this.players[i];
             if (!player.isBooted) {
@@ -214,32 +223,32 @@ function PayTheKingGame(id) {
             }
         }
         if (_this.winner == null)
-            _this.messageTitle =  "No One  wins!";
+            _this.messageTitle = "No One  wins!";
         if (_this.winner != null)
             _this.messageTitle = _this.winner.name + " wins!";
-
+        
         _this.messageDetails = "Game Over";
         
         _this.state = "GameOver";
         _this.kingState = 'happy';
-
+        
         if (_this.winner == null) _this.kingState = 'mad';
-      
+        
         _this.sendEvent("endGame");
-
+        
         var elaspedTime = (Date.now() - _this.startTime) / 1000;
-        _this.reportScoresToServer(_this.id, _this.players,_this.winner, elaspedTime);
+        _this.reportScoresToServer(_this.id, _this.players, _this.winner, elaspedTime);
     }
     this.reportScoresToServer = function (matchId, players, winner, elaspedTime) {
         //avg win amount = 10?
         // var loseAmount = -1 * Math.max(1,Math.round(10/ players.length));
-        var loseAmount = -1 ;
+        var loseAmount = -1;
         var minWinAmount = players.length;
         var gameId = 5;
-        for (var i=0; i < players.length; i++) {
+        for (var i = 0; i < players.length; i++) {
             var player = players[i];
             if (winner == player) {
-                Gamification.ReportRankedGame(gameId, matchId, 0, player.id, 0,Math.max( player.gold, minWinAmount), elaspedTime, '');
+                Gamification.ReportRankedGame(gameId, matchId, 0, player.id, 0, Math.max(player.gold, minWinAmount), elaspedTime, '');
             }
             else {
                 Gamification.ReportRankedGame(gameId, matchId, 0, player.id, 0, loseAmount, elaspedTime, '');
