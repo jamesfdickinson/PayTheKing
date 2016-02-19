@@ -20,7 +20,7 @@
 
     //log on to server
    // var serverUrl = 'http://localhost:8001/';
-    var serverUrl = 'https://paythekingserver.azurewebsitesxxxx.net/';
+    var serverUrl = 'https://paythekingserver.azurewebsites.net/';
     //if (Config && Config.SocketIOUrl) serverUrl = Config.SocketIOUrl;
     var os = 'unknown';
    // if (Config && Config.OS) os = Config.OS;
